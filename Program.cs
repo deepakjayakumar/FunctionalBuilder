@@ -20,6 +20,12 @@
             AddAction(action);
             return this;
         }
+
+        public PersonBuilder Build()
+        {
+            actions.Aggregate(new Person(),(p,f) => f(p));
+            return this;
+        }
         private PersonBuilder AddAction(Action<Person> action) {
             actions.Add(p =>
             {
@@ -30,10 +36,13 @@
         }
 
         }
+
+    
     internal class Program
     {
         static void Main(string[] args)
         {
+            var person = new PersonBuilder().Called("a").Build();
             Console.WriteLine("Hello, World!");
         }
     }
